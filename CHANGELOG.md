@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [1.0.0.rc4] - 2021-09-23
+
+- Add: Additional operations
+
 ## [1.0.0.rc3] - 2021-09-06
 
 - Fix: Operation::Transition uses correct module name

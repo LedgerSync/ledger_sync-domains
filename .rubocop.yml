@@ -1,5 +1,10 @@
 AllCops:
   TargetRubyVersion: 3.0
+  Exclude:
+  - "Gemfile"
+  - "Rakefile"
+  - "bin/**/*"
+  - "spec/**/*"
 
 Style/StringLiterals:
   Enabled: true
