@@ -1,0 +1,69 @@
+# frozen_string_literal: true
+
+require_relative '../operation'
+
+module LedgerSync
+  module Domains
+    class Operation
+      class Transition
+        include LedgerSync::Domains::Operation::Mixin
+
+        class Contract < LedgerSync::Ledgers::Contract
+          params do
+            required(:model_name).filled(:string)
+            required(:id).filled(:integer)
+            required(:event).value(:string)
+            required(:attrs).maybe(:hash)
+            required(:attrs).maybe(:array)
+          end
+        end
+
+        private
+
+        def operate
+          if resource.present?
+            if resource.send(guard_method, params[:attrs]) &&
+               resource.send(event_method, params[:attrs])
+              success
+            else
+              failure('Unable to transition')
+            end
+          else
+            failure('Not found')
+          end
+        end
+
+        def guard_method
+          "may_#{params[:event]}?"
+        end
+
+        def event_method
+          "#{params[:event]}!"
+        end
+
+        def resource
+          @resource ||= resource_class.find_by(id: params[:id])
+        end
+
+        def resource_class
+          @resource_class ||= Object.const_get(params[:model_name])
+        end
+
+        def success
+          super(
+            serialize(resource: resource)
+          )
+        end
+
+        def failure(message)
+          super(
+            LedgerSync::Error::OperationError.new(
+              operation: self,
+              message: message
+            )
+          )
+        end
+      end
+    end
+  end
+end

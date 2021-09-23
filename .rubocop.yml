@@ -1,0 +1,16 @@
+AllCops:
+  TargetRubyVersion: 3.0
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: single_quotes
+
+Style/StringLiteralsInInterpolation:
+  Enabled: true
+  EnforcedStyle: single_quotes
+
+Layout/LineLength:
+  Max: 100
+
+Style/Documentation:
+  Enabled: false
