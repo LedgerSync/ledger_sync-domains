@@ -9,34 +9,34 @@ module LedgerSync
           @serializer = serializer
         end
 
-        QUERY_METHODS = %w(
+        QUERY_METHODS = %w[
           distinct distinct! eager_load eager_load! extending extending!
           from from! group group! having having! includes includes!
           joins joins! left_outer_joins left_outer_joins!
           limit limit! offset offset! order order! preload preload!
           references references! unscope unscope! where where!
           load reload reset
-        ) # lock lock!
-        READER_METHODS = %w(
+        ].freeze # lock lock!
+        READER_METHODS = %w[
           fifth fifth! find find_by find_by! first first! forty_two forty_two!
           fourth fourth! last last! second second! second_to_last
           second_to_last! third third! third_to_last third_to_last!
-        )
-        READERS_METHODS = %w(find_each each map to_ary) # find_in_batches in_batches
-        INSPECT_METHODS = %w(
+        ].freeze
+        READERS_METHODS = %w[find_each each map to_ary].freeze # find_in_batches in_batches
+        INSPECT_METHODS = %w[
           any? blank? empty? explain many? none? one? size to_sql exists? count
           ids maximum minimum sum none none! loaded?
-        )
+        ].freeze
 
-        def inspect(*args)
+        def inspect(*_args)
           entries = to_ary.take(11).map!(&:inspect)
-    
-          entries[10] = "..." if entries.size == 11
-    
+
+          entries[10] = '...' if entries.size == 11
+
           "#<#{self.class.name} [#{entries.join(', ')}]>"
         end
 
-        def as_json(*args)
+        def as_json(*_args)
           to_ary.map!(&:as_json)
         end
 

@@ -15,7 +15,7 @@ module LedgerSync
         # to avoid defining methods in unrelated classes. We are using
         # SimpleDelegator to delegate these methods into OpenStruct passed in.
         # Pure hackery.
-        def self.build(hash, serializer_name, resource:, references:)
+        def self.build(hash, serializer_name, resource:, references:) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
           klass = Class.new(SimpleDelegator) do
             def self.with_lazy_references(hash, struct_class:, resource:, references:) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
               define_method('valid?') { resource.valid? }
@@ -32,18 +32,18 @@ module LedgerSync
                   )
                 end
               end
-  
+
               new(struct_class.new(hash))
             end
-  
+
             def to_param
               id.to_s
             end
-  
+
             def persisted?
               id.present?
             end
-  
+
             def to_json(*args)
               JSON.generate(to_hash, *args)
             end
@@ -54,7 +54,7 @@ module LedgerSync
           struct_name = "#{class_name}Struct"
           module_name = name.empty? ? Object : Object.const_get(name.join('::'))
           module_name.const_set(struct_name, Class.new(OpenStruct))
-  
+
           klass.with_lazy_references(
             hash,
             struct_class: module_name.const_get(struct_name),
