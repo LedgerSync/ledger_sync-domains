@@ -77,11 +77,6 @@ module LedgerSync
             item = resource.try(attribute)
 
             serializer.serialize(resource: item)
-            # Relation.new(
-            #   serializer: serializer,
-            #   resource: resource,
-            #   attribute: attribute
-            # )
           end
         end
 
