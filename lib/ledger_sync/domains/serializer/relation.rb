@@ -22,7 +22,9 @@ module LedgerSync
           fourth fourth! last last! second second! second_to_last
           second_to_last! third third! third_to_last third_to_last!
         ].freeze
-        READERS_METHODS = %w[find_each each map to_ary].freeze # find_in_batches in_batches
+        READERS_METHODS = %w[find_each each map to_ary].freeze
+        # in_batches does not make sense as it renders relation
+        READERS_BATCH_METHODS = %w[find_in_batches].freeze
         INSPECT_METHODS = %w[
           any? blank? empty? explain many? none? one? size to_sql exists? count
           ids maximum minimum sum none none! loaded?
@@ -58,10 +60,22 @@ module LedgerSync
 
         READERS_METHODS.each do |name|
           define_method(name) do |*args, **params, &block|
-            result = @query.send(name, *args, **params, &block)
+            @query.send(name, *args, **params).map do |item|
+              resource = @serializer.serialize(resource: item)
 
-            result.map do |item|
-              @serializer.serialize(resource: item)
+              resource.instance_eval(&block) || resource
+            end
+          end
+        end
+
+        READERS_BATCH_METHODS.each do |name|
+          define_method(name) do |*args, **params, &block|
+            @query.send(name, *args, **params).each do |batch|
+              resources = batch.map do |item|
+                @serializer.serialize(resource: item)
+              end
+
+              resources.instance_eval(&block)
             end
           end
         end
