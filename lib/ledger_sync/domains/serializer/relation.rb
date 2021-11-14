@@ -87,6 +87,10 @@ module LedgerSync
         end
 
         # pass through Enumerable methods
+        def respond_to_missing?(name, _include_private)
+          Enumerable.instance_methods.include?(name.to_sym)
+        end
+
         def method_missing(name, *args, **params, &block)
           return super unless Enumerable.instance_methods.include?(name.to_sym)
 
