@@ -51,7 +51,7 @@ module LedgerSync
             @query.send(name, *args, **params).map do |item|
               resource = @serializer.serialize(resource: item)
 
-              (block && block.yield(resource)) || resource
+              block&.yield(resource) || resource
             end
           end
         end
@@ -63,7 +63,7 @@ module LedgerSync
                 @serializer.serialize(resource: item)
               end
 
-              block && block.yield(resources)
+              block&.yield(resources)
             end
           end
         end
