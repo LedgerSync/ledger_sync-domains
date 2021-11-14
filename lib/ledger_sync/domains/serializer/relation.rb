@@ -30,18 +30,6 @@ module LedgerSync
           ids maximum minimum sum none none! loaded?
         ].freeze
 
-        def inspect(*_args)
-          entries = to_ary.take(11).map!(&:inspect)
-
-          entries[10] = '...' if entries.size == 11
-
-          "#<#{self.class.name} [#{entries.join(', ')}]>"
-        end
-
-        def as_json(*_args)
-          to_ary.map!(&:as_json)
-        end
-
         QUERY_METHODS.each do |name|
           define_method(name) do |*args|
             @query = @query.send(name, *args)
@@ -63,7 +51,7 @@ module LedgerSync
             @query.send(name, *args, **params).map do |item|
               resource = @serializer.serialize(resource: item)
 
-              resource.instance_eval(&block) || resource
+              (block && block.yield(resource)) || resource
             end
           end
         end
@@ -75,7 +63,7 @@ module LedgerSync
                 @serializer.serialize(resource: item)
               end
 
-              resources.instance_eval(&block)
+              block && block.yield(resources)
             end
           end
         end
@@ -84,6 +72,25 @@ module LedgerSync
           define_method(name) do |*args|
             @query.send(name, *args)
           end
+        end
+
+        def inspect(*_args)
+          entries = to_ary.take(11).map!(&:inspect)
+
+          entries[10] = '...' if entries.size == 11
+
+          "#<#{self.class.name} [#{entries.join(', ')}]>"
+        end
+
+        def as_json(*_args)
+          to_ary.map!(&:as_json)
+        end
+
+        # pass through Enumerable methods
+        def method_missing(name, *args, **params, &block)
+          return super unless Enumerable.instance_methods.include?(name.to_sym)
+
+          to_ary.send(name, *args, **params, &block)
         end
 
         class SerializerReferencesOneType
