@@ -35,7 +35,6 @@ module TestResources
 end
 
 RSpec.describe LedgerSync::Domains::Operation do
-  require 'byebug'
   describe 'operate' do
     context 'with nice ID' do
       let(:operation) { TestOperation.new(id: 1, limit: {}, domain: 'Test') }
@@ -45,7 +44,6 @@ RSpec.describe LedgerSync::Domains::Operation do
       }
 
       it 'succeeds' do
-        byebug
         expect(operation.success?).to eq(true)
         expect(operation.result.value.name).to eq('Test')
       end
