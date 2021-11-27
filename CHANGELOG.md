@@ -1,5 +1,10 @@
 ## [Unreleased]
 
+## [1.0.0] - 2021-11-05
+
+- Add: Introduce Serializer::Relation to proxy AR Queries
+- Refactor Struct out of Serializer
+
 ## [1.0.0.rc4] - 2021-09-23
 
 - Add: Additional operations

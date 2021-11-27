@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = 'Use LedgerSync Operations and Serializers for cross-domain communication.'
   spec.homepage      = 'https://engineering.dropbot.sh'
   spec.license       = 'MIT'
-  spec.required_ruby_version = Gem::Requirement.new('>= 3.0.0')
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.7.2')
 
   # spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
