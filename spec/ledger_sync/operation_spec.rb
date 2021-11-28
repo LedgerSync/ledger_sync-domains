@@ -2,10 +2,6 @@
 
 require 'spec_helper'
 
-module ActiveRecord
-  module Base; end
-end
-
 class TestResource < LedgerSync::Resource
   attribute :name, type: LedgerSync::Type::String
   attribute :phone_number, type: LedgerSync::Type::String

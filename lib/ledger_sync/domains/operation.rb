@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+# reopen AR module for non-rails apps
+module ActiveRecord
+  module Base; end
+end
+
 module LedgerSync
   module Domains
     class Operation
@@ -38,7 +43,7 @@ module LedgerSync
 
         attr_reader :params, :result
 
-        def initialize(domain: nil, **params)
+        def initialize(domain:, **params)
           @domain = domain
           @params = params
           @result = nil
@@ -103,7 +108,7 @@ module LedgerSync
 
         def deep_serialize(value)
           case value
-          when ActiveRecord::Base
+          when ActiveRecord::Base, LedgerSync::Resource
             serialize(resource: value)
           when Hash
             value.transform_values { deep_serialize(_1) }
