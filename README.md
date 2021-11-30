@@ -6,7 +6,7 @@ LedgerSync has been developed to handle cross-service (API) communication in ele
 
 Operations are great to ensure there is single point to perform specific action. If the return object is regular ActiveRecord Model object, there is nothing that stops developer from accessing cross-domain relationship, updating it or calling another action on it. You can have rubocop scanning through the code and screaming every time it finds something fishy, or you can just stop passing ActiveRecord objects around. And that is where `LedgerSync::Serializer` comes handy. It gives you simple way to define how your object should look towards specific domain. Instead of passing ruby hash(es), you work with `OpenStruct` objects that supports relationships.  
 
-Use LedgerSync Operations to trigger actions from other domains and LedgerSync Serializers to pass around serialized objects instead of ActiveRecord Models. ActiveRecord Models are compatible with LedgerSync Resources and can be serialized to OpenStruct objects automatically. 
+Use `LedgerSync::Operation` to trigger actions from other domains and `LedgerSync::Serializer` to pass around serialized objects instead of ActiveRecord Models. ActiveRecord Models are compatible with LedgerSync Resources and can be serialized to OpenStruct objects automatically. 
 
 ## Installation
 
@@ -186,7 +186,7 @@ module Auth
         return failure('Not found') if resource.nil?
 
         if resource.update(active: false)
-          success(serialize(resource: resource))
+          success(resource)
         else
           failure('Unable to deactivate')
         end
@@ -208,10 +208,12 @@ module Auth
   end
 end
 ```
-Successful result of an operation should be serialized resource(s). Operation by itself doesn't know what domain triggered it, and therefore you need to pass in serializer you want to use to serialize the resource. Here is how that looks for the example above.
+
+Successful result of an operation should be serialized resource(s). Operations automatically perform success result serialization for you. Any `ActiveRecord::Base` or `LedgerSync::Resource` object will be automatically serialized through matching serializer for the target domain. Any other value will remain untouched. Hashes and arrays are deep-serialized, so you can return hash or array including multiple ActiveRecord objects. Operation by itself doesn't know what domain triggered it, and therefore it requires target domain to be passed either as a module, string or symbol. Here is how that looks for the example above.
+
 
 ```ruby
-irb(main):001:0> op = Auth::Users::FindOperation.new(id: 1, limit: {}, serializer: Auth::Users::ClientSerializer.new)
+irb(main):001:0> op = Auth::Users::FindOperation.new(id: 1, limit: {}, domain: Client)
 => #<Auth::Users::FindOperation:0x0000555937876cf8 @serializer=#<Auth::Users::ClientSerializer:0x0000555937876dc0>, @deserializer=nil...
 irb(main):002:0> op.perform
 => #<LedgerSync::Domains::Operation::OperationResult::Success:0x00005559372f9d70 @meta=nil, @value=#<OpenStruct email="test@ledger_sync.dev">>
@@ -227,11 +229,11 @@ One important note about relationships. Splitting your app into multiple engines
 
 #### Use of cross-domain relationships is bad
 
-In this case, you don't define them. Or if you do, you override reader method to raise exception. If `user` references `customer`, you don't access it through `user.customer`, but you retrieve it through operation `Engine::Customers::FindOperation.new(id: user.customer_id)`. This is a clean solution, but it will lead to N+1 queries.
+In this case, you don't define them. Or if you do, you override reader method to raise exception. If `user` references `customer`, you don't access it through `user.customer`, but you retrieve it through operation `Engine::Customers::FindOperation.new(id: user.customer_id, domain: 'OtherEngine')`. This is a clean solution, but it will lead to N+1 queries.
 
 #### Use of cross-domain relationships is fine
 
-If you double down on getting into root of an issue, you will realize that resources reference each other is not really the source of it. The problem is that if you work with ActiveRecord objects, there is nothing stopping you from accessing related records and modifying them.
+If you try to get into the root of an issue, you will realize that resources reference each other is not really the source of it. The problem is that if you work with ActiveRecord objects, there is nothing stopping you from accessing related records and modifying them.
 
 That cannot happen when accessing objects from other domains. In that case you retrieve serialized object through operation. Accessing relationships through serialized object will always return serialized relationship.
 
