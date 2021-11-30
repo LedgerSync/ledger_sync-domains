@@ -223,6 +223,22 @@ irb(main):003:0> op.result.value
 
 And thats it. Now you can use `LedgerSync` to define operations and have their results serialized against specific domain you are requesting it from.
 
+#### Internal operations
+
+Sometimes you want to create operation, that is not accessible from the rest of the app. The nature of ruby allows all defined classes be accessible from everywhere. To prevent execution of an operation from different domain, use `internal` flag when defining class.
+
+```ruby
+module Auth
+  module Users
+    class FindOperation < LedgerSync::Domains::Operation::Find
+      internal
+    end
+  end
+end
+```
+
+When performing an operation there are series of guards. First one validates if operation is allowed to be executed. That means either it is not flagged as internal operation, or target domain is same domain as module operation is defined in. If operation is not allowed to be executed, failure is returned with `LedgerSync::Domains::InternalOperationError` error.
+
 ### Cross-domain relationships
 
 One important note about relationships. Splitting your app into multiple engines is eventually gonna lead to your ActiveRecord Models to have relationships that reference Models from other engines. There are two ways how to look at this issue.

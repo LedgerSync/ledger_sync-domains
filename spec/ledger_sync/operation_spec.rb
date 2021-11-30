@@ -9,6 +9,8 @@ class TestResource < LedgerSync::Resource
 end
 
 class TestOperation < LedgerSync::Domains::Operation::Find
+  internal
+
   def resource
     return nil if params[:id].negative?
 
@@ -54,6 +56,32 @@ RSpec.describe LedgerSync::Domains::Operation do
 
       it 'fails' do
         expect(operation.success?).to eq(false)
+      end
+    end
+
+    context 'internal operation' do
+      context 'called from same domain' do
+        let(:operation) { TestOperation.new(id: 1, limit: {}, domain: 'Test') }
+
+        before {
+          operation.perform
+        }
+  
+        it 'succeeds' do
+          expect(operation.success?).to eq(true)
+        end
+      end
+
+      context 'called from wrong domain' do
+        let(:operation) { TestOperation.new(id: 1, limit: {}, domain: 'NotATest') }
+
+        before {
+          operation.perform
+        }
+  
+        it 'fails' do
+          expect(operation.success?).to eq(false)
+        end  
       end
     end
   end
