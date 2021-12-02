@@ -103,7 +103,7 @@ module LedgerSync
         def allowed?
           return true unless self.class.internal?
 
-          self.class.to_s.start_with?(@domain.to_s)
+          local_domain == @domain
         end
 
         def performed?
@@ -120,7 +120,17 @@ module LedgerSync
 
         def serializer_class_for(resource:)
           Object.const_get(
-            "#{resource.class.to_s.pluralize}::#{@domain.to_s.capitalize}Serializer"
+            "#{resource.class.to_s.pluralize}::#{domain}Serializer"
+          )
+        end
+
+        def domain
+          LedgerSync::Domains.domains.module_for(domain: @domain)
+        end
+
+        def local_domain
+          LedgerSync::Domains.domains.domain_for(
+            base_module: self.class.to_s.split('::').first.constantize
           )
         end
 
