@@ -2,6 +2,9 @@
 
 require 'spec_helper'
 
+LedgerSync::Domains.register_main_domain
+LedgerSync::Domains.register_domain(:wrong, base_module: nil)
+
 class TestResource < LedgerSync::Resource
   attribute :name, type: LedgerSync::Type::String
   attribute :phone_number, type: LedgerSync::Type::String
@@ -9,6 +12,8 @@ class TestResource < LedgerSync::Resource
 end
 
 class TestOperation < LedgerSync::Domains::Operation::Find
+  internal
+
   def resource
     return nil if params[:id].negative?
 
@@ -17,7 +22,7 @@ class TestOperation < LedgerSync::Domains::Operation::Find
 end
 
 module TestResources
-  class TestSerializer < LedgerSync::Domains::Serializer
+  class Serializer < LedgerSync::Domains::Serializer
     attribute :name
     attribute :phone_number
     attribute :email, if: :email_present?
@@ -33,7 +38,7 @@ end
 RSpec.describe LedgerSync::Domains::Operation do
   describe 'operate' do
     context 'with nice ID' do
-      let(:operation) { TestOperation.new(id: 1, limit: {}, domain: 'Test') }
+      let(:operation) { TestOperation.new(id: 1, limit: {}, domain: :main) }
 
       before {
         operation.perform
@@ -46,7 +51,7 @@ RSpec.describe LedgerSync::Domains::Operation do
     end
 
     context 'with bad ID' do
-      let(:operation) { TestOperation.new(id: -1, limit: {}, domain: 'Test') }
+      let(:operation) { TestOperation.new(id: -1, limit: {}, domain: :main) }
 
       before {
         operation.perform
@@ -54,6 +59,32 @@ RSpec.describe LedgerSync::Domains::Operation do
 
       it 'fails' do
         expect(operation.success?).to eq(false)
+      end
+    end
+
+    context 'internal operation' do
+      context 'called from same domain' do
+        let(:operation) { TestOperation.new(id: 1, limit: {}, domain: :main) }
+
+        before {
+          operation.perform
+        }
+  
+        it 'succeeds' do
+          expect(operation.success?).to eq(true)
+        end
+      end
+
+      context 'called from wrong domain' do
+        let(:operation) { TestOperation.new(id: 1, limit: {}, domain: :wrong) }
+
+        before {
+          operation.perform
+        }
+  
+        it 'fails' do
+          expect(operation.success?).to eq(false)
+        end
       end
     end
   end

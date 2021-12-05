@@ -1,12 +1,16 @@
 # frozen_string_literal: true
 
-# reopen AR module for non-rails apps
-module ActiveRecord
-  module Base; end
+unless Object.const_defined?('ActiveRecord')
+  # reopen AR module for non-rails apps
+  module ActiveRecord
+    module Base; end
+  end
 end
 
 module LedgerSync
   module Domains
+    class InternalOperationError < LedgerSync::Error::OperationError; end
+
     class Operation
       class OperationResult
         module ResultTypeBase
@@ -28,10 +32,23 @@ module LedgerSync
       end
 
       module Mixin # rubocop:disable Metrics/ModuleLength
+        module ClassMethods
+          @internal = false
+
+          def internal
+            @internal = true
+          end
+
+          def internal?
+            !!@internal
+          end
+        end
+
         def self.included(base)
           base.include SimplySerializable::Mixin
           base.include Fingerprintable::Mixin
           base.include LedgerSync::Error::HelpersMixin
+          base.extend ClassMethods
 
           base.class_eval do
             simply_serialize only: %i[
@@ -50,6 +67,15 @@ module LedgerSync
         end
 
         def perform # rubocop:disable Metrics/MethodLength
+          unless allowed?
+            return failure(
+              LedgerSync::Domains::InternalOperationError.new(
+                operation: self,
+                message: 'Cross-domain operation execution is not allowed'
+              )
+            )
+          end
+
           if performed?
             return failure(
               LedgerSync::Error::OperationError::PerformedOperationError.new(
@@ -74,6 +100,12 @@ module LedgerSync
           end
         end
 
+        def allowed?
+          return true unless self.class.internal?
+
+          local_domain == @domain
+        end
+
         def performed?
           @performed == true
         end
@@ -88,7 +120,17 @@ module LedgerSync
 
         def serializer_class_for(resource:)
           Object.const_get(
-            "#{resource.class.to_s.pluralize}::#{@domain.to_s.capitalize}Serializer"
+            "#{resource.class.to_s.pluralize}::#{domain}Serializer"
+          )
+        end
+
+        def domain
+          LedgerSync::Domains.domains.module_for(domain: @domain)
+        end
+
+        def local_domain
+          LedgerSync::Domains.domains.domain_for(
+            base_module: self.class.to_s.split('::').first.constantize
           )
         end
 

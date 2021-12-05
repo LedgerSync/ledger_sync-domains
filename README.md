@@ -27,9 +27,41 @@ Or install it yourself as:
 ## Usage
 
 LedgerSync comes with 3 components.
+0. Registration
 1. Resource
 2. Serializers
 3. Operations
+
+### Register your engines
+
+`LedgerSync::Domains` requires little configuration so it can properly pick up domains and their namespace. While `LedgerSync::Domains` is not required to be used with Rails, it is the most expected usecase. THe problem with Rails (and possibly other codebases) is that the `MainApp` does not have a module namespace and referencing it from other domain operations is not as simple. There are two methods to help you register.
+
+#### Register your Main App
+
+`register_main_domain` creates a domain with name `:main` without any `base_module`. This way you can reference `MainApp` as `domain: :main` and serializers/operations will be picked up from there.
+
+```ruby
+# config/application.rb
+module DropBot
+  class Application < Rails::Application
+    LedgerSync::Domains.register_main_domain
+    # ...
+  end
+end
+```
+
+#### Register your Engine
+
+`register_domain` creates a domain with your own `name` and your own `base_module`. Lets say you place your engines under `engines` folder and you just created `billing` engine. To register it as a domain, update your `engine.rb` file. After that use it in your operations as `domain: :engine`. You can pass in string or symbol.
+```ruby
+# engines/billing/lib/billing/engine.rb
+module Billing
+  class Engine < ::Rails::Engine
+    isolate_namespace Billing
+    LedgerSync::Domains.register_domain(:billing, base_module: Billing)
+  end
+end
+```
 
 ### Resource/Model
 
@@ -222,6 +254,22 @@ irb(main):003:0> op.result.value
 ```
 
 And thats it. Now you can use `LedgerSync` to define operations and have their results serialized against specific domain you are requesting it from.
+
+#### Internal operations
+
+Sometimes you want to create operation, that is not accessible from the rest of the app. The nature of ruby allows all defined classes be accessible from everywhere. To prevent execution of an operation from different domain, use `internal` flag when defining class.
+
+```ruby
+module Auth
+  module Users
+    class FindOperation < LedgerSync::Domains::Operation::Find
+      internal
+    end
+  end
+end
+```
+
+When performing an operation there are series of guards. First one validates if operation is allowed to be executed. That means either it is not flagged as internal operation, or target domain is same domain as module operation is defined in. If operation is not allowed to be executed, failure is returned with `LedgerSync::Domains::InternalOperationError` error.
 
 ### Cross-domain relationships
 
