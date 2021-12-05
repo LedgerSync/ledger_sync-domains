@@ -27,10 +27,10 @@ Or install it yourself as:
 ## Usage
 
 LedgerSync comes with 3 components.
-0. Registration
-1. Resource
-2. Serializers
-3. Operations
+1. Registration
+2. Resource
+3. Serializers
+4. Operations
 
 ### Register your engines
 
