@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ledger_sync-domains (1.0.0.rc5)
+    ledger_sync-domains (1.0.0.rc6)
       ledger_sync (~> 2.2.0)
 
 GEM
@@ -69,8 +69,8 @@ GEM
       faraday-rack (~> 1.0)
       multipart-post (>= 1.2, < 3)
       ruby2_keywords (>= 0.0.4)
-    faraday-detailed_logger (2.3.0)
-      faraday (>= 0.8, < 2)
+    faraday-detailed_logger (2.4.2)
+      faraday (>= 0.16, < 2)
     faraday-em_http (1.0.0)
     faraday-em_synchrony (1.0.0)
     faraday-excon (1.1.0)
@@ -79,15 +79,15 @@ GEM
     faraday-net_http_persistent (1.2.0)
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
-    faraday_middleware (1.1.0)
+    faraday_middleware (1.2.0)
       faraday (~> 1.0)
     fingerprintable (1.2.1)
       colorize
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
-    ledger_sync (2.2.0)
+    ipaddr (1.2.3)
+    ledger_sync (2.2.3)
       activemodel
-      colorize
       dry-schema (~> 1.5.4)
       dry-validation (~> 1.5.6)
       faraday
@@ -98,19 +98,21 @@ GEM
       openssl (~> 2.2.0)
       pd_ruby
       rack (~> 2.2.3)
+      rainbow (~> 3.0)
       resonad
       simply_serializable (>= 1.5.1)
     minitest (5.14.4)
     multipart-post (2.1.1)
-    nokogiri (1.12.4-x86_64-linux)
+    nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
-    openssl (2.2.0)
+    openssl (2.2.1)
+      ipaddr
     parallel (1.20.1)
     parser (3.0.2.0)
       ast (~> 2.4.1)
     pd_ruby (0.2.3)
       colorize
-    racc (1.5.2)
+    racc (1.6.0)
     rack (2.2.3)
     rainbow (3.0.0)
     rake (13.0.6)
