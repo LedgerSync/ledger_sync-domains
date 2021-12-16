@@ -2,6 +2,6 @@
 
 module LedgerSync
   module Domains
-    VERSION = '1.0.0.rc6'
+    VERSION = '1.0.0.rc7'
   end
 end

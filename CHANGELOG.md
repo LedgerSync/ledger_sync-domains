@@ -1,6 +1,10 @@
 ## [Unreleased]
 
-## [1.0.0.rc5] - 2012-12-16
+## [1.0.0.rc7] - 2012-12-16
+
+- Chore: Update LedgerSync to 2.3.1
+
+## [1.0.0.rc5, 1.0.0.rc6] - 2012-12-16
 
 - Fix: Bring back Resource to pre-defined operations
 
