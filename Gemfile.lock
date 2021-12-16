@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ledger_sync-domains (1.0.0.rc4)
+    ledger_sync-domains (1.0.0.rc5)
       ledger_sync (~> 2.2.0)
 
 GEM
@@ -163,4 +163,4 @@ DEPENDENCIES
   rubocop (~> 1.7)
 
 BUNDLED WITH
-   2.2.15
+   2.2.26
