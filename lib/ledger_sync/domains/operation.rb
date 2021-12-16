@@ -120,8 +120,17 @@ module LedgerSync
 
         def serializer_class_for(resource:)
           Object.const_get(
-            "#{resource.class.to_s.pluralize}::#{domain}Serializer"
+            [
+              serializer_module_for(resource: resource),
+              "#{domain}Serializer"
+            ].join('::')
           )
+        end
+
+        def serializer_module_for(resource:)
+          (
+            resource.class.try(:serializer_module) || resource.class
+          ).to_s.pluralize
         end
 
         def domain
