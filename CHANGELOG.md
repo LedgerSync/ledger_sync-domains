@@ -1,6 +1,10 @@
 ## [Unreleased]
 
-## [1.0.0] - 2021-11-05
+## [1.0.0.rc5] - 2012-12-16
+
+- Fix: Bring back Resource to pre-defined operations
+
+## [1.0.0.rc5] - 2021-11-05
 
 - Add: Introduce Serializer::Relation to proxy AR Queries
 - Refactor Struct out of Serializer

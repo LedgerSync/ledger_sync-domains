@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 require_relative '../operation'
+require_relative 'resource'
 
 module LedgerSync
   module Domains
     class Operation
-      class Search
-        include LedgerSync::Domains::Operation::Mixin
-
+      class Search < Resource
         # make kaminari work with serialized results
         class PaginatedResult < SimpleDelegator
           attr_accessor :next_page, :last_page, :current_page, :total_pages,

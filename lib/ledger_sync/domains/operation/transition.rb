@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 require_relative '../operation'
+require_relative 'resource'
 
 module LedgerSync
   module Domains
     class Operation
-      class Transition
-        include LedgerSync::Domains::Operation::Mixin
-
+      class Transition < Resource
         class Contract < LedgerSync::Ledgers::Contract
           params do
             required(:model_name).filled(:string)

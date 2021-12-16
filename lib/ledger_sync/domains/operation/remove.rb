@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 require_relative '../operation'
+require_relative 'resource'
 
 module LedgerSync
   module Domains
     class Operation
-      class Remove
-        include LedgerSync::Domains::Operation::Mixin
-
+      class Remove < Resource
         private
 
         def operate
