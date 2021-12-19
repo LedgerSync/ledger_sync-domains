@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- Chore: Cleanup existing structs when serializing
+
 ## [1.0.0.rc9] - 2021-12-19
 
 - Fix: Cleanup serialization from predefined ActiveRecord operations
