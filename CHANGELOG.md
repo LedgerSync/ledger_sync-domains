@@ -1,6 +1,10 @@
 ## [Unreleased]
 
-## [1.0.0.rc8] - 202-12-19
+## [1.0.0.rc9] - 2021-12-19
+
+- Fix: Cleanup serialization from predefined ActiveRecord operations
+
+## [1.0.0.rc8] - 2021-12-19
 
 - Fix: Temporartily disable serializing LedgerSync::Resource objects
 

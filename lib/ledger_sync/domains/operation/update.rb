@@ -27,9 +27,7 @@ module LedgerSync
         end
 
         def success
-          super(
-            serialize(resource: resource)
-          )
+          super(resource)
         end
 
         def failure(message, data: nil)
