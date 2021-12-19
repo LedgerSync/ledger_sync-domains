@@ -53,9 +53,7 @@ module LedgerSync
           class_name = name.pop.gsub(/[^0-9a-z ]/i, '').gsub(/.*\KSerializer/, '')
           struct_name = "#{class_name}Struct"
           module_name = name.empty? ? Object : Object.const_get(name.join('::'))
-          unless module_name.const_defined?(struct_name)
-            module_name.const_set(struct_name, Class.new(OpenStruct))
-          end
+          module_name.const_set(struct_name, Class.new(OpenStruct))
 
           klass.with_lazy_references(
             hash,

@@ -159,7 +159,7 @@ module LedgerSync
 
         def deep_serialize(value)
           case value
-          when ActiveRecord::Base#, LedgerSync::Resource
+          when ActiveRecord::Base # , LedgerSync::Resource
             serialize(resource: value)
           when Hash
             value.transform_values { deep_serialize(_1) }
