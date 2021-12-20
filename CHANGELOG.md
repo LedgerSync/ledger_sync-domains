@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [1.0.1] - 2021-12-21
+
+- Fix: Removing constant is private method. Sigh.
+
 ## [1.0.0] - 2021-12-20
 
 - Chore: Cleanup existing structs when serializing
