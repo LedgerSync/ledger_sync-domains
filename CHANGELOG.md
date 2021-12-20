@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [1.0.0] - 2021-12-20
+
 - Chore: Cleanup existing structs when serializing
 
 ## [1.0.0.rc9] - 2021-12-19
