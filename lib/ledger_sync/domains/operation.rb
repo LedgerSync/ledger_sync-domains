@@ -85,8 +85,7 @@ module LedgerSync
           end
 
           unless valid?
-            failure(errors)
-            return
+            return failure(errors)
           end
 
           @result = begin
