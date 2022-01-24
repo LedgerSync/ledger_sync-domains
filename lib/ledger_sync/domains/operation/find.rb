@@ -10,7 +10,7 @@ module LedgerSync
         class Contract < LedgerSync::Ledgers::Contract
           params do
             required(:id).filled(:integer)
-            required(:limit).value(:hash)
+            required(:query).value(:hash)
           end
         end
 
@@ -25,7 +25,7 @@ module LedgerSync
         end
 
         def resource
-          @resource ||= resource_class.find_by(id: params[:id], **params[:limit])
+          @resource ||= resource_class.where(params[:query]).find_by(id: params[:id])
         end
 
         def success

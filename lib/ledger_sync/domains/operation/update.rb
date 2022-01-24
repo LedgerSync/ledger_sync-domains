@@ -23,7 +23,7 @@ module LedgerSync
         end
 
         def resource
-          @resource ||= resource_class.find_by(id: params[:id])
+          @resource ||= resource_class.where(params[:query]).find_by(id: params[:id])
         end
 
         def success
