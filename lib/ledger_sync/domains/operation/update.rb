@@ -7,6 +7,13 @@ module LedgerSync
   module Domains
     class Operation
       class Update < Resource
+        class Contract < LedgerSync::Ledgers::Contract
+          params do
+            required(:id).filled(:integer)
+            required(:query).value(:hash)
+          end
+        end
+
         private
 
         def operate
@@ -23,7 +30,7 @@ module LedgerSync
         end
 
         def resource
-          @resource ||= resource_class.find_by(id: params[:id])
+          @resource ||= resource_class.where(params[:query]).find_by(id: params[:id])
         end
 
         def success
