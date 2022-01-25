@@ -1,7 +1,9 @@
 ## [Unreleased]
 
+## [1.0.2] - 2022-01-25
+
 - Fix: Include extra query filtering in Operations
-- Fix: error return after validation falied in perform action of operation class.
+- Fix: Error return after validation falied in perform action of operation class.
 
 ## [1.0.1] - 2021-12-21
 
@@ -30,7 +32,7 @@
 ## [1.0.0.rc5] - 2021-11-05
 
 - Add: Introduce Serializer::Relation to proxy AR Queries
-- Refactor Struct out of Serializer
+- Chore: Refactor Struct out of Serializer
 
 ## [1.0.0.rc4] - 2021-09-23
 
@@ -42,7 +44,7 @@
 
 ## [1.0.0.rc2] - 2021-09-06
 
-- Serialized OpenStruct uses serializer-like class name
+- Add: Serialized OpenStruct uses serializer-like class name
 
 ## [1.0.0.rc1] - 2021-08-31
 
