@@ -7,6 +7,13 @@ module LedgerSync
   module Domains
     class Operation
       class Update < Resource
+        class Contract < LedgerSync::Ledgers::Contract
+          params do
+            required(:id).filled(:integer)
+            required(:query).value(:hash)
+          end
+        end
+
         private
 
         def operate
