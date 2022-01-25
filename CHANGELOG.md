@@ -1,4 +1,7 @@
 ## [Unreleased]
+## [1.0.2] - 2021-12-21
+
+- Fix: Include extra query in Operations
 
 - Fix: error return after validation falied in perform action of operation class.
 
