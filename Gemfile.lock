@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ledger_sync-domains (1.0.2)
+    ledger_sync-domains (1.0.3)
       ledger_sync (~> 2.3.1)
 
 GEM
@@ -85,7 +85,7 @@ GEM
       colorize
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
-    ipaddr (1.2.3)
+    ipaddr (1.2.4)
     ledger_sync (2.3.1)
       activemodel
       dry-schema

@@ -14,6 +14,7 @@ module LedgerSync
             required(:event).value(:string)
             required(:attrs).maybe(:hash)
             required(:attrs).maybe(:array)
+            required(:limit).value(:hash)
           end
         end
 
@@ -41,7 +42,7 @@ module LedgerSync
         end
 
         def resource
-          @resource ||= resource_class.find_by(id: params[:id])
+          @resource ||= resource_class.where(params[:limit]).find_by(id: params[:id])
         end
 
         def resource_class
