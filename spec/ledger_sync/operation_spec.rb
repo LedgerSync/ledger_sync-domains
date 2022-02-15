@@ -38,7 +38,7 @@ end
 RSpec.describe LedgerSync::Domains::Operation do
   describe 'operate' do
     context 'with nice ID' do
-      let(:operation) { TestOperation.new(id: 1, query: {}, domain: :main) }
+      let(:operation) { TestOperation.new(id: 1, limit: {}, domain: :main) }
 
       before {
         operation.perform
@@ -51,7 +51,7 @@ RSpec.describe LedgerSync::Domains::Operation do
     end
 
     context 'with bad ID' do
-      let(:operation) { TestOperation.new(id: -1, query: {}, domain: :main) }
+      let(:operation) { TestOperation.new(id: -1, limit: {}, domain: :main) }
 
       before {
         operation.perform
@@ -64,7 +64,7 @@ RSpec.describe LedgerSync::Domains::Operation do
 
     context 'internal operation' do
       context 'called from same domain' do
-        let(:operation) { TestOperation.new(id: 1, query: {}, domain: :main) }
+        let(:operation) { TestOperation.new(id: 1, limit: {}, domain: :main) }
 
         before {
           operation.perform
@@ -76,7 +76,7 @@ RSpec.describe LedgerSync::Domains::Operation do
       end
 
       context 'called from wrong domain' do
-        let(:operation) { TestOperation.new(id: 1, query: {}, domain: :wrong) }
+        let(:operation) { TestOperation.new(id: 1, limit: {}, domain: :wrong) }
 
         before {
           operation.perform
