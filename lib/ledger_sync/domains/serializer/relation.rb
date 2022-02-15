@@ -100,6 +100,7 @@ module LedgerSync
         class SerializerReferencesOneType
           def proxy(serializer:, resource:, attribute:)
             item = resource.try(attribute)
+            return nil unless item
 
             serializer.serialize(resource: item)
           end

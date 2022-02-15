@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [1.0.4] - 2022-02-15
+
+- Fix: Do not serialize unset relationships
+
 ## [1.0.3] - 2022-02-12
 
 - Fix: Resource shorthand operations uses limit instead of query

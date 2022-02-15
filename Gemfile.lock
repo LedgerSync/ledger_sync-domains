@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ledger_sync-domains (1.0.3)
+    ledger_sync-domains (1.0.4)
       ledger_sync (~> 2.3.1)
 
 GEM
@@ -33,7 +33,7 @@ GEM
     dry-logic (1.2.0)
       concurrent-ruby (~> 1.0)
       dry-core (~> 0.5, >= 0.5)
-    dry-schema (1.8.0)
+    dry-schema (1.9.0)
       concurrent-ruby (~> 1.0)
       dry-configurable (~> 0.13, >= 0.13.0)
       dry-core (~> 0.5, >= 0.5)
