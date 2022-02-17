@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [1.0.5] - 2022-02-17
+
+- Fix: Do not serialize unset reader relational method 
+
 ## [1.0.4] - 2022-02-15
 
 - Fix: Do not serialize unset relationships

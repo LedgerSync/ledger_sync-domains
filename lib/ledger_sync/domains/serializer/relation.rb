@@ -41,6 +41,7 @@ module LedgerSync
         READER_METHODS.each do |name|
           define_method(name) do |*args, **params, &block|
             item = @query.send(name, *args, **params, &block)
+            return nil unless item
 
             @serializer.serialize(resource: item)
           end
