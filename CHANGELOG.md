@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## [1.1.0] - 2022-02-25
+
+- Feature: Add and Update operations uses `data` params for setting model attributes
+- Chore: minor indentation cleanup
+- Feature: add method to output validation errors as a string
+
 ## [1.0.5] - 2022-02-17
 
 - Fix: Do not serialize unset reader relational method 

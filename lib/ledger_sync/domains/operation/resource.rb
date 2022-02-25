@@ -10,6 +10,12 @@ module LedgerSync
           @resource_class ||= inferred_resource_class
         end
 
+        def validation_error_message
+          errors.messages.map do |e|
+            "#{e.path.first.to_s.gsub('_', ' ').capitalize} #{e.text}"
+          end.to_sentence
+        end
+
         private
 
         def inferred_resource_class

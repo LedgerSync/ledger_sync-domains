@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ledger_sync-domains (1.0.5)
+    ledger_sync-domains (1.1.0)
       ledger_sync (~> 2.3.1)
 
 GEM
@@ -54,7 +54,7 @@ GEM
       dry-schema (~> 1.9, >= 1.9.1)
     factory_bot (6.2.0)
       activesupport (>= 5.0.0)
-    faraday (1.9.3)
+    faraday (1.10.0)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
@@ -103,7 +103,7 @@ GEM
       simply_serializable (>= 1.5.1)
     minitest (5.15.0)
     multipart-post (2.1.1)
-    nokogiri (1.13.1-x86_64-linux)
+    nokogiri (1.13.3-x86_64-linux)
       racc (~> 1.4)
     openssl (2.2.1)
       ipaddr

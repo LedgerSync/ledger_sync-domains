@@ -11,6 +11,7 @@ module LedgerSync
           params do
             required(:id).filled(:integer)
             required(:limit).value(:hash)
+            required(:data).value(:hash)
           end
         end
 
@@ -19,7 +20,7 @@ module LedgerSync
         def operate
           return failure('Resource not found') unless resource
 
-          if resource.update(params.except(:id))
+          if resource.update(params[:data])
             success
           else
             failure(
@@ -39,11 +40,11 @@ module LedgerSync
 
         def failure(message, data: nil)
           super(
-              LedgerSync::Error::OperationError.new(
-                operation: self,
-                message: message,
-                response: data
-              )
+            LedgerSync::Error::OperationError.new(
+              operation: self,
+              message: message,
+              response: data
+            )
           )
         end
       end

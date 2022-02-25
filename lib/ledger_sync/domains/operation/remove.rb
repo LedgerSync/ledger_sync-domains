@@ -41,11 +41,11 @@ module LedgerSync
 
         def failure(message, data: nil)
           super(
-              LedgerSync::Error::OperationError.new(
-                operation: self,
-                message: message,
-                response: data
-              )
+            LedgerSync::Error::OperationError.new(
+              operation: self,
+              message: message,
+              response: data
+            )
           )
         end
       end
