@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'relation'
+require_relative 'query'
 
 module LedgerSync
   module Domains
@@ -23,7 +23,7 @@ module LedgerSync
               define_method('to_hash') { hash }
               references.each do |args|
                 define_method(args.hash_attribute) do
-                  Relation.const_get(
+                  Query.const_get(
                     args.type.class.to_s.split('::').last
                   ).new.proxy(
                     serializer: args.type.serializer.new,

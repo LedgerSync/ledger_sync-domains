@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- Feature: Refactor Relation into Query for use outside of relationships
+
 ## [1.1.0] - 2022-02-25
 
 - Feature: Add and Update operations uses `data` params for setting model attributes

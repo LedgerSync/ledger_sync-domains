@@ -3,9 +3,9 @@
 module LedgerSync
   module Domains
     class Serializer < LedgerSync::Serializer
-      class Relation
-        def initialize(serializer:, resource:, attribute:)
-          @query = resource.try(attribute)
+      class Query
+        def initialize(serializer:, query:)
+          @query = query
           @serializer = serializer
         end
 
@@ -109,10 +109,9 @@ module LedgerSync
 
         class SerializerReferencesManyType
           def proxy(serializer:, resource:, attribute:)
-            Relation.new(
+            Query.new(
               serializer: serializer,
-              resource: resource,
-              attribute: attribute
+              query: resource.try(attribute)
             )
           end
         end
