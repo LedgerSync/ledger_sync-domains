@@ -1,6 +1,9 @@
 ## [Unreleased]
 
+## [1.1.1] - 2022-03-17
+
 - Feature: Refactor Relation into Query for use outside of relationships
+- Feature: Add Query operation
 
 ## [1.1.0] - 2022-02-25
 
