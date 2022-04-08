@@ -45,7 +45,7 @@ module LedgerSync
             end
 
             def to_json(*args)
-              JSON.generate(to_hash, *args)
+              JSON.generate(to_hash, *args)Do not use parallel assignment.
             end
           end
 
@@ -53,9 +53,13 @@ module LedgerSync
           class_name = name.pop.gsub(/[^0-9a-z ]/i, '').gsub(/.*\KSerializer/, '')
           struct_name = "#{class_name}Struct"
           module_name = name.empty? ? Object : Object.const_get(name.join('::'))
-          # module_name.remove_const(struct_name) if module_name.const_defined?(struct_name)
-          module_name.const_set(struct_name, Class.new(OpenStruct))
-
+          begin
+            v, $VERBOSE = $VERBOSE, v
+            # module_name.remove_const(struct_name) if module_name.const_defined?(struct_name)
+            module_name.const_set(struct_name, Class.new(OpenStruct))
+          ensure
+            $VERBOSE = v
+          end
           klass.with_lazy_references(
             hash,
             struct_class: module_name.const_get(struct_name),
