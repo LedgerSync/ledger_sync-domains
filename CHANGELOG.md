@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [1.1.3] - 2022-04-08
+
+- Fix: Nasty typo
+
 ## [1.1.2] - 2022-04-08
 
 - Fix: Disable previous definition warning

@@ -45,7 +45,7 @@ module LedgerSync
             end
 
             def to_json(*args)
-              JSON.generate(to_hash, *args)Do not use parallel assignment.
+              JSON.generate(to_hash, *args)
             end
           end
 
