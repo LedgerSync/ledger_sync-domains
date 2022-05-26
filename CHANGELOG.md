@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [1.1.4] - 2022-05-26
+
+- Feature: Operation accepts custom serializer
+
 ## [1.1.3] - 2022-04-08
 
 - Fix: Nasty typo

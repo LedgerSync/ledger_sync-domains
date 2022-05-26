@@ -60,8 +60,9 @@ module LedgerSync
 
         attr_reader :params, :result
 
-        def initialize(domain:, **params)
+        def initialize(domain:, serializer: nil, **params)
           @domain = domain
+          @serializer = serializer
           @params = params
           @result = nil
         end
@@ -112,7 +113,7 @@ module LedgerSync
         end
 
         def serializer_for(resource:)
-          serializer_class_for(resource: resource).new
+          @serializer || serializer_class_for(resource: resource).new
         end
 
         def serializer_class_for(resource:)
