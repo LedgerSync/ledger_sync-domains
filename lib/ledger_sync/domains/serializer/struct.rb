@@ -21,7 +21,15 @@ module LedgerSync
               define_method('valid?') { resource.valid? }
               define_method('errors') { resource.errors }
               define_method('to_hash') { hash }
+              define_method('class_name') { resource.class.name }
+              define_method('model_name') { resource.model_name }
+              define_method('to_key') { resource.to_key }
               references.each do |args|
+                if args.type.instance_of?(LedgerSync::Serialization::Type::SerializerReferencesOneType) # rubocop:disable Layout/LineLength
+                  define_method("#{args.hash_attribute}_id") do
+                    resource.send("#{args.hash_attribute}_id")
+                  end
+                end
                 define_method(args.hash_attribute) do
                   Query.const_get(
                     args.type.class.to_s.split('::').last
@@ -42,6 +50,10 @@ module LedgerSync
 
             def persisted?
               id.present?
+            end
+
+            def to_model
+              self
             end
 
             def to_json(*args)

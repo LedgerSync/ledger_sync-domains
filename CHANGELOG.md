@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [1.2.0] - 2022-07-07
+
+- Feature: Add proxy methos to make Serialized resources work nice with rails forms
+
 ## [1.1.4] - 2022-05-26
 
 - Feature: Operation accepts custom serializer
@@ -25,7 +29,7 @@
 
 ## [1.0.5] - 2022-02-17
 
-- Fix: Do not serialize unset reader relational method 
+- Fix: Do not serialize unset reader relational method
 
 ## [1.0.4] - 2022-02-15
 
