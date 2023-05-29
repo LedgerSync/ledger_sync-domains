@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    ledger_sync-domains (1.2.0)
-      ledger_sync (~> 2.3.1)
+    ledger_sync-domains (1.2.1)
+      ledger_sync (~> 2.5.0)
 
 GEM
   remote: https://rubygems.org/
@@ -86,8 +86,9 @@ GEM
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
     ipaddr (1.2.4)
-    ledger_sync (2.3.1)
+    ledger_sync (2.5.0)
       activemodel
+      dotenv
       dry-schema
       dry-validation
       faraday
@@ -97,15 +98,15 @@ GEM
       nokogiri
       openssl (~> 2.2.0)
       pd_ruby
-      rack (~> 2.2.3)
+      rack (>= 2.2.3)
       rainbow (~> 3.0)
       resonad
       simply_serializable (>= 1.5.1)
+    mini_portile2 (2.8.2)
     minitest (5.15.0)
     multipart-post (2.2.3)
-    nokogiri (1.13.6-arm64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.13.6-x86_64-linux)
+    nokogiri (1.13.6)
+      mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     openssl (2.2.1)
       ipaddr
@@ -155,6 +156,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  x86_64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
@@ -167,4 +169,4 @@ DEPENDENCIES
   rubocop (~> 1.7)
 
 BUNDLED WITH
-   2.2.26
+   2.4.1
