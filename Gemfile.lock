@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    ledger_sync-domains (1.2.1)
-      ledger_sync (~> 2.5.0)
+    ledger_sync-domains (1.2.2)
+      ledger_sync (~> 2.6.0)
 
 GEM
   remote: https://rubygems.org/
@@ -86,7 +86,7 @@ GEM
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
     ipaddr (1.2.4)
-    ledger_sync (2.5.0)
+    ledger_sync (2.6.0)
       activemodel
       dotenv
       dry-schema
@@ -96,7 +96,7 @@ GEM
       faraday_middleware
       fingerprintable (>= 1.2.1)
       nokogiri
-      openssl (~> 2.2.0)
+      openssl (> 2.2.0)
       pd_ruby
       rack (>= 2.2.3)
       rainbow (~> 3.0)
