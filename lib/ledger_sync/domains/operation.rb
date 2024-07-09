@@ -109,7 +109,7 @@ module LedgerSync
         end
 
         def serialize(resource:)
-          serializer = serializer_for(reosurce: resource)
+          serializer = serializer_for(resource: resource)
           return resource unless serializer
 
           serializer_for(resource: resource).new.serialize(resource: resource)
