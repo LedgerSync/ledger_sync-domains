@@ -60,7 +60,7 @@ module LedgerSync
 
         attr_reader :params, :result
 
-        def initialize(domain:, serializer: nil, **params)
+        def initialize(domain: nil, serializer: nil, **params)
           @domain = domain
           @serializer = serializer
           @params = params
@@ -109,26 +109,31 @@ module LedgerSync
         end
 
         def serialize(resource:)
-          serializer_for(resource: resource).serialize(resource: resource)
+          serializer = serializer_for(reosurce: resource)
+          return resource unless serializer
+
+          serializer_for(resource: resource).new.serialize(resource: resource)
         end
 
         def serializer_for(resource:)
-          @serializer || serializer_class_for(resource: resource).new
+          @serializer || serializer_class_for(resource: resource)
         end
 
         def serializer_class_for(resource:)
-          Object.const_get(
-            [
-              serializer_module_for(resource: resource),
-              "#{domain}Serializer"
-            ].join('::')
-          )
+          name = [
+            serializer_module_for(resource: resource),
+            "#{domain}Serializer"
+          ].join('::')
+
+          return unless Object.const_defined?(name)
+
+          Object.const_get(name)
         end
 
         def serializer_module_for(resource:)
           (
-            resource.class.try(:serializer_module) || resource.class
-          ).to_s.pluralize
+            resource.class.try(:serializer_module) || resource.class.name.pluralize
+          )
         end
 
         def domain
