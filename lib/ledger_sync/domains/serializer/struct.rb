@@ -24,6 +24,7 @@ module LedgerSync
               define_method('class_name') { resource.class.name }
               define_method('model_name') { resource.model_name }
               define_method('to_key') { resource.to_key }
+              define_method('_resource') { resource }
               references.each do |args|
                 if args.type.instance_of?(LedgerSync::Serialization::Type::SerializerReferencesOneType) # rubocop:disable Layout/LineLength
                   define_method("#{args.hash_attribute}_id") do

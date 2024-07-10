@@ -5,33 +5,23 @@ require_relative 'serializer/struct'
 module LedgerSync
   module Domains
     class Serializer < LedgerSync::Serializer
-      def self.split_attributes
-        regular = []
-        references = []
-
-        attributes.each_value do |attr|
-          if attr.references_many? || attr.references_one?
-            references.push(attr)
-          else
-            regular.push(attr)
-          end
+      def attributes_for(*)
+        self.class.attributes.values.select do |attr|
+          !attr.references_many? && !attr.references_one?
         end
-        [regular, references]
       end
 
-      def serialize(args = {}) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-        only_changes = args.fetch(:only_changes, false)
-        resource     = args.fetch(:resource)
+      def references_for(*)
+        self.class.attributes.values.select do |attr|
+          attr.references_many? || attr.references_one?
+        end
+      end
 
+      def serialize(args = {}) # rubocop:disable Metrics/MethodLength
+        resource = args.fetch(:resource)
         ret = {}
 
-        regular, references = self.class.split_attributes
-        regular.each do |serializer_attribute|
-          if (only_changes && !resource.attribute_changed?(serializer_attribute.resource_attribute)) || # rubocop:disable Layout/LineLength
-             (serializer_attribute.if_method.present? && !send(serializer_attribute.if_method, resource: resource)) # rubocop:disable Layout/LineLength
-            next
-          end
-
+        attributes_for(resource: resource).each do |serializer_attribute|
           ret = LedgerSync::Util::HashHelpers.deep_merge(
             hash_to_merge_into: ret,
             other_hash: serializer_attribute.hash_attribute_hash_for(resource: resource)
@@ -39,7 +29,8 @@ module LedgerSync
         end
         Serializer::Struct.build(
           ret, self.class.to_s,
-          resource: resource, references: references
+          resource: resource,
+          references: references_for(resource: resource)
         )
       end
     end
