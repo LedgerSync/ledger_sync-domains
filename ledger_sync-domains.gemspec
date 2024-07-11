@@ -6,19 +6,19 @@ Gem::Specification.new do |spec|
   spec.name          = 'ledger_sync-domains'
   spec.version       = LedgerSync::Domains::VERSION
   spec.authors       = ['Jozef Vaclavik']
-  spec.email         = ['jozef@dropbot.sh']
+  spec.email         = ['jozef@hey.com']
 
   spec.summary       = 'LedgerSync for Domains/Engines'
   spec.description   = 'Use LedgerSync Operations and Serializers for cross-domain communication.'
-  spec.homepage      = 'https://engineering.dropbot.sh'
+  spec.homepage      = 'https://www.ledgersync.dev/'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.7.2')
 
   # spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
   spec.metadata['homepage_uri'] = spec.homepage
-  spec.metadata['source_code_uri'] = 'https://github.com/sandbite/ledger_sync-domains'
-  spec.metadata['changelog_uri'] = 'https://github.com/sandbite/ledger_sync-domains/blob/main/CHANGELOG.md'
+  spec.metadata['source_code_uri'] = 'https://github.com/LedgerSync/ledger_sync-domains'
+  spec.metadata['changelog_uri'] = 'https://github.com/LedgerSync/ledger_sync-domains/blob/main/CHANGELOG.md'
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.

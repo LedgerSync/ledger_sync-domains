@@ -9,6 +9,48 @@ end
 
 module LedgerSync
   module Domains
+    module ResultBase
+      module HelperMethods
+        def Success(value = nil, *args, **keywords) # rubocop:disable Naming/MethodName
+          self::Success.new(value, *args, **keywords)
+        end
+
+        def Failure(error = nil, *args, **keywords) # rubocop:disable Naming/MethodName
+          self::Failure.new(error, *args, **keywords)
+        end
+      end
+
+      def self.included(base)
+        base.const_set('Success', Class.new(Resonad::Success))
+        base::Success.include base::ResultTypeBase if base.const_defined?('ResultTypeBase')
+
+        base.const_set('Failure', Class.new(Resonad::Failure))
+        base::Failure.include base::ResultTypeBase if base.const_defined?('ResultTypeBase')
+
+        base.extend HelperMethods
+      end
+    end
+
+    class OperationResult
+      module ResultTypeBase
+        attr_reader :operation, :meta
+
+        def self.included(base)
+          base.class_eval do
+            simply_serialize only: %i[operation meta]
+          end
+        end
+
+        def initialize(*args, **keywords)
+          @operation = keywords.fetch(:operation)
+          @meta = keywords[:meta]
+          super(*args)
+        end
+      end
+
+      include ResultBase
+    end
+
     class Operation
       class OperationResult
         module ResultTypeBase
@@ -71,7 +113,7 @@ module LedgerSync
         def perform # rubocop:disable Metrics/MethodLength
           unless allowed?
             return failure(
-              LedgerSync::Domains::OperationError.new(
+              LedgerSync::Domains::InternalOperationError.new(
                 operation: self,
                 message: 'Cross-domain operation execution is not allowed'
               )
@@ -161,20 +203,23 @@ module LedgerSync
         end
 
         def success(value, meta: nil)
-          @result = LedgerSync::OperationResult.Success(deep_serialize(value), meta: meta)
+          @result = LedgerSync::Domains::OperationResult.Success(
+            deep_serialize(value),
+            operation: self, meta: meta
+          )
         end
 
         def failure(error)
           unless error.is_a?(Exception)
             error = LedgerSync::Domains::UnspecifiedError.new(operation: self, error: error)
           end
-          
-          @result = LedgerSync::OperationResult.Failure(error)
+
+          @result = LedgerSync::Domains::OperationResult.Failure(error, operation: self)
         end
 
         def deep_serialize(value)
           case value
-          when ActiveRecord::Base # , LedgerSync::Resource
+          when ActiveRecord::Base, LedgerSync::Resource
             serialize(resource: value)
           when Hash
             value.transform_values { deep_serialize(_1) }

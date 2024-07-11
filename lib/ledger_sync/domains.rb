@@ -17,14 +17,14 @@ require_relative 'domains/operation/update'
 
 module LedgerSync
   module Domains
-    class OperationError < LedgerSync::Error::OperationError; end
+    class InternalOperationError < LedgerSync::Error::OperationError; end
 
     class UnspecifiedError < LedgerSync::Error::OperationError
       attr_reader :error
 
       def initialize(operation:, error:)
         @error = error
-        message = "Operation failed with unraisable error. Please check your error."
+        message = 'Operation failed with unraisable error. Please check your error.'
         super(message: message, operation: operation)
       end
 
