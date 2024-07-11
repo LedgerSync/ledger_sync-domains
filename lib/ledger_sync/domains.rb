@@ -17,6 +17,43 @@ require_relative 'domains/operation/update'
 
 module LedgerSync
   module Domains
+    class OperationError < LedgerSync::Error::OperationError; end
+
+    class UnspecifiedError < LedgerSync::Error::OperationError
+      attr_reader :error
+
+      def initialize(operation:, error:)
+        @error = error
+        message = "Operation failed with unraisable error. Please check your error."
+        super(message: message, operation: operation)
+      end
+
+      def inspect
+        "#<#{self.class}: #{message} (errors: #{error.inspect})>"
+      end
+    end
+
+    class ValidationError < LedgerSync::Error::OperationError
+      attr_reader :errors
+
+      def initialize(operation:, errors:)
+        @errors = errors
+        message = 'Operation arguments are invalid. Please check your errors.'
+        super(message: message, operation: operation)
+      end
+
+      def inspect
+        "#<#{self.class}: #{message} (errors: #{errors.inspect})>"
+      end
+    end
+
+    class PerformedOperationError < LedgerSync::Error::OperationError
+      def initialize(operation:)
+        message = 'Operation has already been performed. Please check the result.'
+        super(message: message, operation: operation)
+      end
+    end
+
     def self.domains
       @domains ||= LedgerSync::Domains::ConfigurationStore.new
     end

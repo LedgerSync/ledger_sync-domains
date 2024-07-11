@@ -269,7 +269,7 @@ module Auth
 end
 ```
 
-When performing an operation there are series of guards. First one validates if operation is allowed to be executed. That means either it is not flagged as internal operation, or target domain is same domain as module operation is defined in. If operation is not allowed to be executed, failure is returned with `LedgerSync::Domains::InternalOperationError` error.
+When performing an operation there are series of guards. First one validates if operation is allowed to be executed. That means either it is not flagged as internal operation, or target domain is same domain as module operation is defined in. If operation is not allowed to be executed, failure is returned with `LedgerSync::Domains::OperationError` error.
 
 ### Cross-domain relationships
 

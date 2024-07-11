@@ -9,8 +9,6 @@ end
 
 module LedgerSync
   module Domains
-    class InternalOperationError < LedgerSync::Error::OperationError; end
-
     class Operation
       class OperationResult
         module ResultTypeBase
@@ -60,17 +58,20 @@ module LedgerSync
 
         attr_reader :params, :result
 
-        def initialize(domain: nil, serializer: nil, **params)
+        def initialize(domain: nil, **params)
           @domain = domain
-          @serializer = serializer
           @params = params
           @result = nil
+
+          validation_contract_class.new.schema.key_map.each do |key|
+            define_singleton_method(key.name) { params[key.name.to_sym] }
+          end
         end
 
         def perform # rubocop:disable Metrics/MethodLength
           unless allowed?
             return failure(
-              LedgerSync::Domains::InternalOperationError.new(
+              LedgerSync::Domains::OperationError.new(
                 operation: self,
                 message: 'Cross-domain operation execution is not allowed'
               )
@@ -79,13 +80,20 @@ module LedgerSync
 
           if performed?
             return failure(
-              LedgerSync::Error::OperationError::PerformedOperationError.new(
+              LedgerSync::Domains::PerformedOperationError.new(
                 operation: self
               )
             )
           end
 
-          return failure(errors) unless valid?
+          unless valid?
+            return failure(
+              LedgerSync::Domains::ValidationError.new(
+                operation: self,
+                errors: errors
+              )
+            )
+          end
 
           @result = begin
             operate
@@ -116,7 +124,9 @@ module LedgerSync
         end
 
         def serializer_for(resource:)
-          @serializer || serializer_class_for(resource: resource)
+          return unless Object.const_defined?(serializer_class_name_for(resource: resource))
+
+          Object.const_get(serializer_class_name_for(resource: resource))
         end
 
         def serializer_class_name_for(resource:)
@@ -124,12 +134,6 @@ module LedgerSync
             serializer_module_for(resource: resource),
             "#{domain}Serializer"
           ].join('::')
-        end
-
-        def serializer_class_for(resource:)
-          return unless Object.const_defined?(serializer_class_name_for(resource: resource))
-
-          Object.const_get(serializer_class_name_for(resource: resource))
         end
 
         def serializer_module_for(resource:)
@@ -148,8 +152,8 @@ module LedgerSync
 
         # Results
 
-        def failure(error)
-          @result = OperationResult.Failure(error)
+        def success?
+          result.success?
         end
 
         def failure?
@@ -157,7 +161,15 @@ module LedgerSync
         end
 
         def success(value, meta: nil)
-          @result = OperationResult.Success(deep_serialize(value), meta: meta)
+          @result = LedgerSync::OperationResult.Success(deep_serialize(value), meta: meta)
+        end
+
+        def failure(error)
+          unless error.is_a?(Exception)
+            error = LedgerSync::Domains::UnspecifiedError.new(operation: self, error: error)
+          end
+          
+          @result = LedgerSync::OperationResult.Failure(error)
         end
 
         def deep_serialize(value)
@@ -173,10 +185,6 @@ module LedgerSync
           end
         end
 
-        def success?
-          result.success?
-        end
-
         def valid?
           validate.success?
         end
@@ -189,10 +197,6 @@ module LedgerSync
         end
 
         def validation_contract_class
-          @validation_contract_class ||= inferred_validation_contract_class
-        end
-
-        def inferred_validation_contract_class
           self.class.const_get('Contract')
         end
 
