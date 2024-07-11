@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [1.2.2] - 2023-07-07
+
+- Feature: Updated ledger-sync version to 2.6.0
+
 ## [1.2.1] - 2023-05-29
 
 - Feature: Updated ledger-sync version to 2.5.0
