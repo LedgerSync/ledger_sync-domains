@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ledger_sync-domains (1.2.1)
+    ledger_sync-domains (1.2.2)
       ledger_sync (~> 2.5.0)
 
 GEM
