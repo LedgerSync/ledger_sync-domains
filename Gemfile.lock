@@ -86,6 +86,8 @@ GEM
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     ipaddr (1.2.4)
+    json (2.10.1)
+    language_server-protocol (3.17.0.4)
     ledger_sync (2.5.0)
       activemodel
       dotenv
@@ -102,6 +104,7 @@ GEM
       rainbow (~> 3.0)
       resonad
       simply_serializable (>= 1.5.1)
+    lint_roller (1.1.0)
     mini_portile2 (2.8.2)
     minitest (5.25.4)
     multipart-post (2.2.3)
@@ -110,18 +113,18 @@ GEM
       racc (~> 1.4)
     openssl (2.2.1)
       ipaddr
-    parallel (1.21.0)
-    parser (3.0.3.2)
+    parallel (1.26.3)
+    parser (3.3.7.1)
       ast (~> 2.4.1)
+      racc
     pd_ruby (0.2.3)
       colorize
     racc (1.6.0)
     rack (2.2.4)
-    rainbow (3.0.0)
+    rainbow (3.1.1)
     rake (13.0.6)
-    regexp_parser (2.2.0)
+    regexp_parser (2.10.0)
     resonad (1.4.0)
-    rexml (3.2.5)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -135,24 +138,28 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-support (3.13.2)
-    rubocop (1.23.0)
+    rubocop (1.73.2)
+      json (~> 2.3)
+      language_server-protocol (~> 3.17.0.2)
+      lint_roller (~> 1.1.0)
       parallel (~> 1.10)
-      parser (>= 3.0.0.0)
+      parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
-      regexp_parser (>= 1.8, < 3.0)
-      rexml
-      rubocop-ast (>= 1.12.0, < 2.0)
+      regexp_parser (>= 2.9.3, < 3.0)
+      rubocop-ast (>= 1.38.0, < 2.0)
       ruby-progressbar (~> 1.7)
-      unicode-display_width (>= 1.4.0, < 3.0)
-    rubocop-ast (1.15.0)
-      parser (>= 3.0.1.1)
-    ruby-progressbar (1.11.0)
+      unicode-display_width (>= 2.4.0, < 4.0)
+    rubocop-ast (1.38.1)
+      parser (>= 3.3.1.0)
+    ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     simply_serializable (1.5.1)
       fingerprintable (>= 1.2.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    unicode-display_width (2.1.0)
+    unicode-display_width (3.1.4)
+      unicode-emoji (~> 4.0, >= 4.0.4)
+    unicode-emoji (4.0.4)
 
 PLATFORMS
   aarch64-linux
@@ -167,7 +174,7 @@ DEPENDENCIES
   ledger_sync-domains!
   rake (~> 13.0)
   rspec (~> 3.13)
-  rubocop (~> 1.7)
+  rubocop (~> 1.73)
 
 BUNDLED WITH
    2.4.1
