@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = 'Use LedgerSync Operations and Serializers for cross-domain communication.'
   spec.homepage      = 'https://www.ledgersync.dev/'
   spec.license       = 'MIT'
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.7.2')
+  spec.required_ruby_version = Gem::Requirement.new('>= 3.1.0')
 
   # spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
@@ -29,7 +29,8 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'ledger_sync', '~> 2.5.0'
+  spec.add_dependency 'ledger_sync', '~> 3.0.0'
+  spec.add_dependency 'openssl', '~> 3.1.0'
   spec.add_development_dependency 'byebug'
   spec.add_development_dependency 'dotenv'
   spec.add_development_dependency 'factory_bot'
