@@ -137,15 +137,17 @@ module LedgerSync
             )
           end
 
-          @result = begin
-            operate
+          begin
+            @result = operate
           rescue LedgerSync::Error => e
-            failure(e)
+            @result = failure(e)
           rescue StandardError => e
-            failure(e)
+            @result = failure(e)
           ensure
             @performed = true
           end
+
+          @result
         end
 
         def allowed?
