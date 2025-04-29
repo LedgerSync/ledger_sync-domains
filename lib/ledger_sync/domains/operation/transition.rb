@@ -12,8 +12,7 @@ module LedgerSync
             required(:model_name).filled(:string)
             required(:id).filled(:integer)
             required(:event).value(:string)
-            required(:attrs).maybe(:hash)
-            required(:attrs).maybe(:array)
+            required(:attrs).maybe(%i[hash array])
             required(:limit).value(:hash)
           end
         end
