@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="RUBY_MODULE" version="4">
+  <component name="ModuleRunConfigurationManager">
+    <shared />
+  </component>
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/features" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="concurrent-ruby (v1.3.5, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="diff-lcs (v1.6.0, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="factory_bot (v6.5.1, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="faraday-detailed_logger (v2.5.0, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="faraday-em_http (v1.0.0, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="faraday-em_synchrony (v1.0.0, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="faraday-excon (v1.1.0, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="faraday-httpclient (v1.0.1, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="faraday-net_http_persistent (v1.2.0, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="faraday-patron (v1.0.0, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="faraday-rack (v1.0.0, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="faraday-retry (v1.0.3, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="fingerprintable (v1.2.1, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="i18n (v1.14.7, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="language_server-protocol (v3.17.0.4, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="ledger_sync (v3.0.0, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="lint_roller (v1.1.0, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="pd_ruby (v0.2.3, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="racc (v1.8.1, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rainbow (v3.1.1, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rake (v13.2.1, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="regexp_parser (v2.10.0, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="resonad (v1.4.0, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rspec (v3.13.0, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rspec-core (v3.13.3, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rspec-expectations (v3.13.3, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rspec-mocks (v3.13.2, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rspec-support (v3.13.2, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="ruby-progressbar (v1.13.0, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="simply_serializable (v1.5.1, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="tzinfo (v2.0.6, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="unicode-display_width (v3.1.4, RVM: ruby-3.3.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="unicode-emoji (v4.0.4, RVM: ruby-3.3.4) [gem]" level="application" />
+  </component>
+</module>

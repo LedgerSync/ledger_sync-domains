@@ -21,8 +21,7 @@ module LedgerSync
 
         def operate
           if resource.present?
-            if resource.send(guard_method, params[:attrs]) &&
-               resource.send(event_method, params[:attrs])
+            if run_guard && run_event
               success
             else
               failure('Unable to transition')
@@ -32,8 +31,16 @@ module LedgerSync
           end
         end
 
+        def run_guard
+          resource.send(guard_method, params[:attrs])
+        end
+
         def guard_method
           "may_#{params[:event]}?"
+        end
+
+        def run_event
+          resource.send(event_method, params[:attrs])
         end
 
         def event_method
