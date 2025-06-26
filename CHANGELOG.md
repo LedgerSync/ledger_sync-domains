@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [1.3.1] - 2025-06-26
+
+- Feature: Added run_guard and run_event method for flexible use of the transition operation
+
 ## [1.2.1] - 2023-05-29
 
 - Feature: Updated ledger-sync version to 2.5.0
