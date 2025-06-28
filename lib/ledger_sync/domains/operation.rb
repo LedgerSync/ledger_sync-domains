@@ -209,6 +209,8 @@ module LedgerSync
             deep_serialize(value),
             operation: self, meta: meta
           )
+          success_callback
+          @result
         end
 
         def failure(error)
@@ -217,7 +219,13 @@ module LedgerSync
           end
 
           @result = LedgerSync::Domains::OperationResult.Failure(error, operation: self)
+          failure_callback
+          @result
         end
+
+        def success_callback; end
+
+        def failure_callback; end
 
         def deep_serialize(value)
           case value
