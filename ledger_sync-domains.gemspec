@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'ledger_sync', '~> 3.0.0'
-  spec.add_dependency 'openssl', '~> 3.1.0'
+  spec.add_dependency 'openssl', '>= 3.1', '< 3.4'
   spec.add_development_dependency 'byebug'
   spec.add_development_dependency 'dotenv'
   spec.add_development_dependency 'factory_bot'
