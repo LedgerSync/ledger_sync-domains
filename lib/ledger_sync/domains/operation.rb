@@ -214,10 +214,9 @@ module LedgerSync
         end
 
         def failure(error)
-          unless error.is_a?(Exception)
-            error = LedgerSync::Domains::UnspecifiedError.new(operation: self, error: error)
-          end
-
+          # unless error.is_a?(Exception)
+          #   error = LedgerSync::Domains::UnspecifiedError.new(operation: self, error: error)
+          # end
           @result = LedgerSync::Domains::OperationResult.Failure(error, operation: self)
           failure_callback
           @result
