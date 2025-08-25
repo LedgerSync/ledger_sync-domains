@@ -19,19 +19,19 @@ module LedgerSync
         private
 
         def operate
-          success(query)
+          success(result_query)
         end
 
         def resources
-          @resources ||= resource_class.where(params[:limit])
-                                       .where(params[:query])
-                                       .includes(params[:includes])
-                                       .order(params[:order])
+          @resources ||= resource_class.where(limit)
+                                       .where(query)
+                                       .includes(includes)
+                                       .order(order)
         end
 
-        def query
+        def result_query
           LedgerSync::Domains::Serializer::Query.new(
-            serializer: params[:serializer] || serializer_for(resource: resource_class.new),
+            serializer: serializer || serializer_for(resource: resource_class.new),
             query: resources
           )
         end

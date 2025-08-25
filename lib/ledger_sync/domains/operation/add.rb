@@ -27,7 +27,7 @@ module LedgerSync
         end
 
         def resource
-          @resource ||= resource_class.new(params[:data])
+          @resource ||= resource_class.new(data)
         end
 
         def success

@@ -21,8 +21,8 @@ module LedgerSync
 
         def operate
           if resource.present?
-            if resource.send(guard_method, params[:attrs]) &&
-               resource.send(event_method, params[:attrs])
+            if resource.send(guard_method, attrs) &&
+               resource.send(event_method, attrs)
               success
             else
               failure('Unable to transition')
@@ -33,19 +33,19 @@ module LedgerSync
         end
 
         def guard_method
-          "may_#{params[:event]}?"
+          "may_#{event}?"
         end
 
         def event_method
-          "#{params[:event]}!"
+          "#{event}!"
         end
 
         def resource
-          @resource ||= resource_class.where(params[:limit]).find_by(id: params[:id])
+          @resource ||= resource_class.where(limit).find_by(id: id)
         end
 
         def resource_class
-          @resource_class ||= Object.const_get(params[:model_name])
+          @resource_class ||= Object.const_get(model_name)
         end
 
         def success

@@ -20,7 +20,7 @@ module LedgerSync
         def operate
           return failure('Resource not found') unless resource
 
-          if resource.update(params[:data])
+          if resource.update(data)
             success
           else
             failure(
@@ -31,7 +31,7 @@ module LedgerSync
         end
 
         def resource
-          @resource ||= resource_class.where(params[:limit]).find_by(id: params[:id])
+          @resource ||= resource_class.where(limit).find_by(id: id)
         end
 
         def success
