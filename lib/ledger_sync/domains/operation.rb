@@ -110,6 +110,14 @@ module LedgerSync
           end
         end
 
+        def initialize_copy(original)
+          super
+
+          validation_contract_class.new.schema.key_map.each do |key|
+            define_singleton_method(key.name) { params[key.name.to_sym] }
+          end
+        end
+
         def perform # rubocop:disable Metrics/MethodLength
           unless allowed?
             return failure(
