@@ -49,7 +49,7 @@ module LedgerSync
           end
         end
 
-        def resources
+        def resources # rubocop:disable Metrics/AbcSize
           @resources ||= resource_class.where(params[:limit])
                                        .where(params[:query])
                                        .includes(params[:includes])
