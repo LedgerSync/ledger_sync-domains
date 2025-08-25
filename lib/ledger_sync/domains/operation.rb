@@ -164,13 +164,13 @@ module LedgerSync
           serializer = serializer_for(resource: resource)
           return resource unless serializer
 
-          serializer_for(resource: resource).new.serialize(resource: resource)
+          serializer.serialize(resource: resource)
         end
 
         def serializer_for(resource:)
           return unless Object.const_defined?(serializer_class_name_for(resource: resource))
 
-          Object.const_get(serializer_class_name_for(resource: resource))
+          Object.const_get(serializer_class_name_for(resource: resource)).new
         end
 
         def serializer_class_name_for(resource:)
