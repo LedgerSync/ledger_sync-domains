@@ -23,10 +23,10 @@ module LedgerSync
         end
 
         def resources
-          @resources ||= resource_class.where(limit)
-                                       .where(query)
-                                       .includes(includes)
-                                       .order(order)
+          @resources ||= resource_class.where(params[:limit])
+                                       .where(params[:query])
+                                       .includes(params[:includes])
+                                       .order(params[:order])
         end
 
         def result_query

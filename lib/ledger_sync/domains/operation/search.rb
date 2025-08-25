@@ -50,12 +50,12 @@ module LedgerSync
         end
 
         def resources
-          @resources ||= resource_class.where(limit)
-                                       .where(query)
-                                       .includes(includes)
-                                       .order(order)
-                                       .page(page)
-                                       .per(per)
+          @resources ||= resource_class.where(params[:limit])
+                                       .where(params[:query])
+                                       .includes(params[:includes])
+                                       .order(params[:order])
+                                       .page(params[:page])
+                                       .per(params[:per])
         end
 
         def success
