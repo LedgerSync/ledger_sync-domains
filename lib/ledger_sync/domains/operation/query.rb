@@ -30,8 +30,9 @@ module LedgerSync
         end
 
         def result_query
+          # NOTE: Serializer is optionally passed in
           LedgerSync::Domains::Serializer::Query.new(
-            serializer: serializer || serializer_for(resource: resource_class.new),
+            serializer: params[:serializer] || serializer_for(resource: resource_class.new),
             query: resources
           )
         end
