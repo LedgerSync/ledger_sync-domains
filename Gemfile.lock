@@ -120,7 +120,7 @@ GEM
     racc (1.8.1)
     rack (3.1.16)
     rainbow (3.1.1)
-    rake (13.2.1)
+    rake (13.3.0)
     regexp_parser (2.10.0)
     resonad (1.4.0)
     rspec (3.13.1)
@@ -175,7 +175,7 @@ DEPENDENCIES
   dotenv
   factory_bot
   ledger_sync-domains!
-  rake (~> 13.2)
+  rake (~> 13.3)
   rspec (~> 3.13)
   rubocop (~> 1.78)
 
